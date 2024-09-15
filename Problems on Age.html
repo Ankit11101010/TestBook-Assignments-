@@ -167,28 +167,33 @@
                 progressElement.textContent = `${currentQuestion + 1}/${questions.length}`;
             }
 
-            //Timer start function
-            function startTimer(duration) {
-                let timeleft = duration;
-                const timer = document.getElementById('timer');
+                 // Timer start function
+    function startTimer(duration) {
+        let timeleft = duration;
+        const timer = document.getElementById('timer');
+        timer.textContent = `${timeleft}`;
+        timeleft--;
+        timeinterval = setInterval(function() {
+            if (timeleft > 0) {
                 timer.textContent = `${timeleft}`;
                 timeleft--;
-                timeinterval = setInterval(function() {
-                    if (timeleft > 0) {
-                        timer.textContent = `${timeleft}`;
-                        timeleft--;
-                    } else {
-                        clearInterval(timeinterval);
-                        timer.innerHTML = `Time's up`;
-                        nextQuestion();
-                    }
-                }, 1000);
+            } else {
+                clearInterval(timeinterval);
+                timer.innerHTML = `Time's up`;
+                nextQuestion();
             }
+        }, 1000);
+    }
+
+    // Start the timer after the page fully loads
+    window.onload = function() {
+        updateProgress();
+        startTimer(30);
+    };
             const resultUrl = `result.html?totalTime=${totalTime}&totalQuestions=${totalQuestions}&attemptedQuestions=${attemptedQuestions}&passFail=${passFail}&correctAnswers=${correctAnswers}&wrongAnswers=${wrongAnswers}&percentage=${percentage}&category=Problem on Age`;
             window.location.href = resultUrl;
 
-            updateProgress();
-            startTimer(30);
+            
         </script>
     </div>
 </body>
